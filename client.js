@@ -40,4 +40,51 @@ const employees = [
 // This is not a race. Everyone on your team should understand what is happening.
 // Ask questions when you don't.
 
-console.log( employees );
+function bonus(employee){
+  let annualBonus;
+  if(employee.reviewRating <=2){
+    annualBonus = 0;
+  }
+  else if (employee.reviewRating == 3){
+    annualBonus = employee.annualSalary * .04;
+  }
+  else if (employee.reviewRating == 4){
+    annualBonus = employee.annualSalary * .06;
+  }
+  else if (employee.reviewRating == 5){
+    annualBonus = employee.annualSalary * .1;
+  }
+  finalBonus(employee, annualBonus);
+}
+
+function finalBonus(employee, calculatedBonus){
+if (employee.employeeNumber.length == 4){
+  calculatedBonus += employee.annualSalary * .05;
+ }
+//after much debate we went with $9718 for Scout's bonus...
+//due to the fact that he had seniority and a good rating
+//we decided the company meant to take the 1% off before the cap of 13%
+
+ if (employee.annualSalary > 65000){
+  calculatedBonus = calculatedBonus * .99;
+}
+ if ((calculatedBonus / employee.annualSalary) > .13){
+  calculatedBonus = employee.annualSalary * .13;
+}
+if (calculatedBonus < 0){
+  calculatedBonus = 0;
+}
+calculatedBonus = Math.round(calculatedBonus);
+employee.bonus = calculatedBonus; 
+return calculatedBonus;
+};
+
+
+for(let i = 0; i < employees.length; i++){
+let calculatedBonus = bonus(employees[i]);
+console.log(`${employees[i].name}'s bonus is  $${employees[i].bonus}.`)
+};
+
+console.log(employees);
+
+//let outputtext = `<h3> ${employee.name} </h3>`
